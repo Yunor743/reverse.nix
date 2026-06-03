@@ -6,13 +6,13 @@
   outputs = { self, nixpkgs, microvm }:
     let
       system = "x86_64-linux";
-      vm = nixpkgs.lib.nixosSystem {
+      coruscant = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
           microvm.nixosModules.microvm
           {
             system.stateVersion = "25.05";
-            networking.hostName = "my-vm";
+            networking.hostName = "coruscant";
             services.getty.autologinUser = "root";
             environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
               radare2
@@ -20,12 +20,20 @@
             ];
             microvm = {
               hypervisor = "qemu";
-              shares = [{
-                tag = "ro-store";
-                source = "/nix/store";
-                mountPoint = "/nix/.ro-store";
-                proto = "9p";
-              }];
+              shares = [
+                {
+                  tag = "ro-store";
+                  source = "/nix/store";
+                  mountPoint = "/nix/.ro-store";
+                  proto = "9p";
+                }
+                {
+                  tag = "host-shared";
+                  source = ".";
+                  mountPoint = "/shared";
+                  proto = "9p";
+                }
+              ];
               interfaces = [{
                 type = "user";
                 id = "qemu";
@@ -45,10 +53,10 @@
         ];
       };
     in {
-      nixosConfigurations.my-vm = vm;
-      apps.${system}.my-vm = {
+      nixosConfigurations.coruscant = coruscant;
+      apps.${system}.coruscant = {
         type = "app";
-        program = "${vm.config.microvm.runner.qemu}/bin/microvm-run";
+        program = "${coruscant.config.microvm.runner.qemu}/bin/microvm-run";
       };
     };
 }

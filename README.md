@@ -8,12 +8,12 @@ Leveraging [microvm.nix](https://github.com/microvm-nix/microvm.nix) to provide 
 ### On NixOS (with flakes)
 
 ```bash
-nix run github:Yunor743/reverse.nix#my-vm
+nix run github:Yunor743/reverse.nix#coruscant
 ```
 
 ### On others *nix distros
 
 ```bash
-docker run --rm -it --device /dev/kvm --privileged nixos/nix nix run --extra-experimental-features 'nix-command flakes' github:Yunor743/reverse.nix#my-vm
+docker run --rm -it --device /dev/kvm --privileged nixos/nix nix run --extra-experimental-features 'nix-command flakes' github:Yunor743/reverse.nix#coruscant
 ```
 
