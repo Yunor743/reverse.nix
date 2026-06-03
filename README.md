@@ -14,6 +14,6 @@ nix run github:Yunor743/reverse.nix#coruscant
 ### On others *nix distros
 
 ```bash
-docker run --rm -it --device /dev/kvm --privileged nixos/nix nix run --extra-experimental-features 'nix-command flakes' github:Yunor743/reverse.nix#coruscant
+sudo docker run -v $(pwd):/workspace -w /workspace --rm -it --device /dev/kvm --privileged nixos/nix nix run --extra-experimental-features 'nix-command flakes' github:Yunor743/reverse.nix#coruscant
 ```
 
