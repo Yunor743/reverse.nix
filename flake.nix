@@ -20,6 +20,9 @@
             ];
             microvm = {
               hypervisor = "qemu";
+              mem = 4096;
+              vcpu = 4;
+
               shares = [
                 {
                   tag = "ro-store";
