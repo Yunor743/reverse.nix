@@ -17,3 +17,13 @@ nix run github:Yunor743/reverse.nix#coruscant
 sudo docker run -v $(pwd):/workspace -w /workspace --rm -it --device /dev/kvm --privileged nixos/nix nix run --extra-experimental-features 'nix-command flakes' github:Yunor743/reverse.nix#coruscant
 ```
 
+---
+
+## Known issue
+Running from a DrvFs path (`/mnt/c/...`) fails because UNIX domain sockets aren't supported on Windows filesystems.
+**Workaround:** Run from a native Linux directory:
+
+```bash
+mkdir -p ~/tmp && cd ~/tmp
+# then run the docker command
+```
