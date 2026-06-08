@@ -17,6 +17,8 @@
             environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
               radare2
               neovim
+              git
+              pkg-config
             ];
             microvm = {
               hypervisor = "qemu";
